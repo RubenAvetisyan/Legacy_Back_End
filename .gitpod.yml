@@ -1,0 +1,14 @@
+tasks:
+  - name: Install Dependencies
+    command: |
+      cd TimestampMicroservice
+      pnpm install
+
+  - name: Run Dev Server
+    command: |
+      cd TimestampMicroservice
+      pnpm dev
+
+ports:
+  - port: 3000
+    onOpen: open-preview
