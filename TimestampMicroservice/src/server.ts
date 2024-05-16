@@ -1,11 +1,14 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 
 const app = express();
 
 app.use(cors());
 
 const PORT = process.env.PORT || 3000;
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/:date?', (req, res) => {
   const { date } = req.params;

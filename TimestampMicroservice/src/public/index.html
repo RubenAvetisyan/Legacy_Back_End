@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timestamp Microservice</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      width: calc(100% - 30px);
+    }
+    #result {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Timestamp Microservice</h1>
+    <p>Enter a date string or Unix timestamp to get the corresponding Unix and UTC timestamps.</p>
+    <input type="text" id="inputDate" placeholder="Enter date or Unix timestamp">
+    <button onclick="fetchTimestamp()">Get Timestamp</button>
+    <div id="result"></div>
+  </div>
+  <script>
+    async function fetchTimestamp(date = '') {
+      const response = await fetch(`/api/${date}`);
+      const data = await response.json();
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    }
+
+    // Fetch the current timestamp on page load
+    window.onload = () => {
+      fetchTimestamp();
+    };
+  </script>
+</body>
+</html>
