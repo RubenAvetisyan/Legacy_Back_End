@@ -2,34 +2,37 @@ import express from 'express';
 import cors from 'cors';
 
 const app = express();
+
 app.use(cors());
 
 const PORT = process.env.PORT || 3000;
 
 app.get('/api/:date?', (req, res) => {
   const { date } = req.params;
+  
+  let parsedDate;
 
-  let response;
-
+  // Handle empty date parameter
   if (!date) {
-    const now = new Date();
-    response = {
-      unix: now.getTime(),
-      utc: now.toUTCString()
-    };
+    parsedDate = new Date();
   } else {
-    const parsedDate = !isNaN(Number(date)) ? new Date(Number(date)) : new Date(date);
-    if (parsedDate.toString() === 'Invalid Date') {
-      response = { error: 'Invalid Date' };
+    // Handle Unix timestamp
+    if (!isNaN(Number(date))) {
+      parsedDate = new Date(Number(date));
     } else {
-      response = {
-        unix: parsedDate.getTime(),
-        utc: parsedDate.toUTCString()
-      };
+      // Handle date string
+      parsedDate = new Date(date);
     }
   }
 
-  res.json(response);
+  if (parsedDate.toString() === 'Invalid Date') {
+    res.json({ error: 'Invalid Date' });
+  } else {
+    res.json({
+      unix: parsedDate.getTime(),
+      utc: parsedDate.toUTCString()
+    });
+  }
 });
 
 app.listen(PORT, () => {
