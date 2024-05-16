@@ -5,18 +5,17 @@ import path from 'path';
 const app = express();
 
 app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.get('/api/:date?', (req, res) => {
   const { date } = req.params;
-  
+
   let parsedDate;
 
-  // Handle empty date parameter
   if (!date) {
+    // Handle empty date parameter
     parsedDate = new Date();
   } else {
     // Handle Unix timestamp
