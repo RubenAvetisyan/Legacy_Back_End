@@ -2,9 +2,8 @@
   "name": "Legacy_Back_End",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "dev-timestamp": "cd TimestampMicroservice && pnpm install && pnpm dev"
+    "start-timestamp": "cd TimestampMicroservice && npm start"
   },
   "keywords": [],
   "author": "",
